@@ -1,0 +1,732 @@
+/* Casino rows */
+
+.wcc-table{display:flex;flex-direction:column;gap:14px}
+
+.wcc-row.is-bad{background:linear-gradient(180deg,rgba(40,20,26,.7),rgba(21,26,39,.95));border-color:#402a34}
+
+.wcc-row .cell{display:flex;flex-direction:column}
+/* Map cells to named grid areas */
+.wcc-row .brand{ grid-area: brand; }
+.wcc-row .cell.bonus{ grid-area: bonus; }
+.wcc-row .cell.spins{ grid-area: spins; align-items:flex-start; }
+.wcc-row .cell.features{ grid-area: features; }
+.wcc-row .cell.actions{ grid-area: actions; }   /* doesn't affect the flex styles below */
+
+/* make the whole thing clickable without extra wrapper boxes */
+.wcc-row .brand .brand-link{ display:contents; }
+
+.wcc-row .title{font-weight:800;font-size:18px}
+
+.wcc-row .caption{font-size:12px;color:var(--wc-text-2)}
+
+.wcc-row{
+  background:var(--wc-surface);
+  border:var(--wc-line);
+  border-radius:14px;
+  padding:14px;
+  display:grid;
+  gap:16px;
+  column-gap:26px;
+  align-items:start;
+  color:var(--wc-text);
+  overflow:hidden;
+
+  /* Desktop layout (State A) */
+  grid-template-columns:
+    342px                        /* brand (room for name) */
+    minmax(240px, 340px)         /* bonus (wraps, capped) */
+    90px                         /* spins (chip-ish) */
+    minmax(240px, 330px)         /* features (wraps, capped) */
+    var(--wcc-cta-w);            /* actions (fixed) */
+
+  grid-template-areas:
+    "brand bonus spins features actions";
+}
+
+/* CTA column – consistent width & left aligned */
+.wcc-row .actions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:8px;
+}
+.wcc-row .actions .btn{
+  width:auto;
+  max-width:var(--wcc-cta-w);
+}
+
+/* Wrap long bonus values (don’t let them hog space) */
+.wcc-row .cell.bonus .value{
+  max-width: 22ch;  /* wrap sooner to free width */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+
+/* Wrap features for consistent column spacing */
+.wcc-row .cell.features{
+  max-width: 32ch;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+
+.wcc-row .btn{display:inline-flex;align-items:center;gap:6px;padding:11px 14px;border-radius:12px;background:#1a2136;border:1px solid #213055;color:var(--wc-text);text-decoration:none;box-sizing:border-box;width:100%}
+
+.wcc-row .btn.cta{background:linear-gradient(180deg,var(--wc-accent),var(--wc-accent-2));color:var(--wc-text-inv);border-color:transparent}
+
+.wcc-row .btn.bad{background:#1e2230}
+
+.wcc-row .review-link{display:inline-block;margin-top:8px;font-size:14px;line-height:1.1;color:#9bd3ff;text-decoration:none}
+
+.wcc-row .review-link:hover { text-decoration: underline; }
+
+.wcc-row .terms{grid-column:1/-1;margin-top:8px;font-size:12px;color:var(--wc-text-2);opacity:.9}
+
+/* Sticky anchors */
+
+.wcc-anchors{position:sticky;top:72px;z-index:10;display:flex;gap:10px;flex-wrap:wrap;background:transparent;padding:0 0 10px}
+
+.anchor-btn{display:inline-flex;padding:8px 12px;border-radius:12px;border:1px solid #213055;background:#0f1726;color:var(--wc-text);text-decoration:none}
+
+.anchor-btn:hover { border-color:#314367; filter:brightness(1.02); }
+
+/* Demo + Review blocks */
+
+.wcc-review{margin-top:18px;background:#111827;border:var(--wc-line);border-radius:14px;padding:16px}
+
+/* Review headings: clear hierarchy */
+.wcc-review h1{
+  margin: 0 0 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2rem);
+}
+/* Replace your current .wcc-review h2 block with: */
+.wcc-review h2{
+  margin: 1.2rem 0 .6rem;
+  font-weight: 700;                             /* was 800 */
+  line-height: 1.25;
+  font-size: clamp(1.25rem, 1.05rem + .55vw, 1.5rem); /* was 1.3…1.6rem */
+}
+.wcc-review h3{
+  margin: 1rem 0 .5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem);
+}
+
+/* Keep TOC links normal weight */
+.wcc-review .wcc-toc a { font-weight: 400; }
+
+/* Optional: if the TOC title feels too heavy */
+.wcc-review .wcc-toc h2 { font-weight: 700; }  /* or whatever you prefer */
+
+
+
+.wcc-demo{margin-top:18px;background:#111827;border:var(--wc-line);border-radius:14px;padding:12px}
+
+.wcc-demo .framewrap{position:relative;width:100%;padding-top:56.25%;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#122032,#1d2b3f)}
+
+.wcc-demo iframe{position:absolute;inset:0;border:0;width:100%;height:100%}
+
+.wcc-demo .demo-overlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:10px;background:var(--wc-accent);color:var(--wc-text-inv);border:0;border-radius:14px;padding:14px 18px;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+
+.wcc-demo .demo-overlay span{pointer-events:none}
+
+.wcc-demo .demo-note{font-size:12px;color:var(--wc-text-2);margin-top:8px}
+
+/* === Highlights: image on top, title left, "Slot" right === */
+
+/* Track */
+.wcc-highlights{
+  display:flex; gap:12px; overflow-x:auto; padding:2px 2px 4px;
+}
+
+/* Card */
+.hi-card{
+  /* 3 across, wide and shallow */
+  flex:1 1 33.333%;
+  min-width:360px;
+
+  background:transparent !important;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  color:var(--wc-text);
+  text-decoration:none;
+  padding:0;
+  box-shadow:none;
+  overflow:hidden;
+
+  /* image row + fixed-height caption row */
+  display:grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 24px;         /* fixed row so both sides align */
+  grid-template-areas:
+    "img img"
+    "title meta";
+  row-gap:4px;
+  align-content:start;
+}
+
+/* Image */
+.hi-card img{
+  grid-area: img;
+  justify-self: center;
+  width:78%;
+  max-width:520px;
+  height:86px;                           /* tweak 80–92px if needed */
+  object-fit:contain;
+  margin:12px 0 4px;
+  border-radius:10px;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
+}
+
+/* Title (left) */
+.hi-card .t{
+  grid-area: title;
+  margin:0;
+  padding-left:10px;
+  font-weight:800;
+  font-size:15px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+
+  /* force perfect vertical centering in the 24px row */
+  align-self:stretch;
+  display:flex; align-items:center;
+  line-height:1;                          /* avoid extra ascent/descent */
+}
+
+/* "Slot" meta (right) */
+.hi-card .k{
+  grid-area: meta;
+  margin:0;
+  padding-right:10px;
+  font-size:11px;
+  color:var(--wc-text-2);
+  text-align:right;
+
+  /* same centering as title */
+  align-self:stretch;
+  display:flex; align-items:center;
+  line-height:1;
+}
+
+/* Trim panel padding to keep section compact */
+.card.hl-shell{ padding-top:6px; padding-bottom:6px; }
+
+@media (max-width: 860px){
+  .hi-card{ min-width:280px; }
+  .hi-card img{ height:72px; margin:10px 0 4px; }
+}
+
+/* Make the intro paragraph smaller on phones */
+@media (max-width: 680px){
+  .wcc-intro{
+    font-size: .92rem;     /* tweak: .90–.96rem */
+    line-height: 1.35;     /* a bit tighter so it wraps less */
+    /* Optional: trim spacing below—uncomment if you want it tighter */
+    /* margin-bottom: .6rem !important; */
+  }
+}
+
+
+/* Slots grid */
+
+.wcc-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+.wcc-slots.cols-4{grid-template-columns:repeat(4,1fr)}
+
+.wcc-slots.cols-2{grid-template-columns:repeat(2,1fr)}
+
+.wcc-slots .slot{display:flex;flex-direction:column;gap:8px;background:var(--wc-surface);border:var(--wc-line);border-radius:14px;padding:12px;color:var(--wc-text);text-decoration:none}
+
+.wcc-slots .slot img{width:100%;height:140px;object-fit:cover;border-radius:10px}
+
+.wcc-slots .slot .ph{width:100%;height:140px;border-radius:10px;background:linear-gradient(135deg,rgba(100,165,255,.2),rgba(94,225,162,.2))}
+
+.wcc-slots .slot .slotname{font-weight:800}
+
+.wcc-slots .slot .provider{font-size:12px;color:var(--wc-text-2)}
+
+/* News */
+
+.wcc-news{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+.wcc-news .news-card{background:var(--wc-surface);border:var(--wc-line);border-radius:14px;padding:10px}
+
+.wcc-news .news-card img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+
+.wcc-news .news-card .ph{width:100%;height:150px;border-radius:10px;background:linear-gradient(135deg,rgba(100,165,255,.2),rgba(94,225,162,.2))}
+
+.wcc-news .news-card h3{margin:10px 0 6px;font-size:16px}
+
+.wcc-news .news-card .meta{font-size:12px;color:var(--wc-text-2)}
+
+/* Optional navigation polish */
+
+body.wcc-nav .menu{display:flex;gap:18px;align-items:center}
+
+body.wcc-nav .menu>li>a{display:inline-flex;padding:10px 12px;border-radius:14px;color:var(--wc-text);text-decoration:none;border:1px solid var(--wc-border);transition:all .15s}
+
+body.wcc-nav .menu>li>a:hover{ border-color:#314367; filter:brightness(1.02); }
+
+
+@media (max-width: 768px){
+body.wcc-nav .menu{flex-direction:column;align-items:flex-start;gap:8px;padding:4px 6px}
+body.wcc-nav .menu>li{width:100%}
+body.wcc-nav .menu>li>a{padding:9px 12px;border-radius:10px;width:100%}
+}
+
+/* Responsive */
+
+/* === Laptop squeeze (981–1280px) — name under logo + wider CTA === */
+@media (max-width:1280px) and (min-width:981px){
+
+  .wcc-row{
+    column-gap:18px;
+    grid-template-columns:
+      320px                       /* brand: enough for names */
+      minmax(220px, 1fr)          /* bonus: flexible, grows if room */
+      90px                        /* spins */
+      minmax(180px, 220px);       /* actions: flexible, capped */
+    grid-template-areas:
+      "brand bonus spins actions"
+      "features features features features";
+  }
+
+  /* Center CTA inside its flexible column */
+  .wcc-row .actions{
+    align-items:center;
+  }
+  .wcc-row .actions .btn{
+    width:100%;
+    max-width:220px;
+  }
+}
+
+/* === Tablet only (681–980px) — one-column stack === */
+@media (max-width:980px) and (min-width:681px){
+  .wcc-row{
+    grid-template-columns:1fr;
+    column-gap:16px;
+    row-gap:14px;
+    grid-template-areas:
+      "brand"
+      "bonus"
+      "spins"
+      "features"
+      "actions";
+  }
+
+  /* Center CTA and relax wrapping */
+  .wcc-row .actions{ align-items:center; }
+  .wcc-row .actions .btn{ width:92%; max-width:360px; }
+  .wcc-row .cell.bonus .value{ max-width:22ch; }
+  .wcc-row .cell.features{ max-width:32ch; white-space:normal; overflow-wrap:anywhere; }
+
+  /* Brand: centered logo + title under it */
+  .wcc-row .brand{
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .wcc-row .brand .title{
+    display:block;
+    margin-top:8px;
+    text-align:center;
+  }
+}
+
+/* Other grids that change at ≤860px */
+@media (max-width: 860px){
+  .wcc-slots{grid-template-columns:repeat(2,1fr)}
+  .wcc-news{grid-template-columns:repeat(2,1fr)}
+}
+
+/* === Mobile (≤680px) — logo only, fully stacked === */
+@media (max-width:680px){
+  .wcc-row{
+    grid-template-columns:1fr;
+    row-gap:14px;
+    padding:16px;
+    grid-template-areas:
+      "brand"
+      "bonus"
+      "spins"
+      "features"
+      "actions";
+  }
+
+  /* Brand: center logo only */
+  .wcc-row .brand{
+    display: flex !important;          /* beat the later desktop rule */
+    grid-template-columns: unset !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .wcc-row .brand .title{ display:none !important; }
+  .wcc-row .brand .logoimg{
+    display: block;
+    height: calc(var(--wcc-logo-h) + 8px);
+    width: auto;
+    margin: 0 auto;
+  }
+
+  /* CTA centered */
+  .wcc-row .actions{ align-items:center; }
+  .wcc-row .btn{
+    width:92%;
+    max-width:360px;
+    justify-content:center;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .wcc-row .review-link{ align-self:center; }
+  .wcc-row .terms{ margin-top:6px; }
+}
+
+
+/* === Enhanced CTA styling (v1.7.2) === */
+
+.wcc-row .btn.cta{
+background: linear-gradient(135deg, var(--wc-accent) 0%, var(--wc-accent-2) 60%, var(--wc-accent-2-hover) 100%);
+color: var(--wc-text-inv);
+border: 0;
+box-shadow: 0 6px 18px rgba(16,185,129,.25), inset 0 -1px 0 rgba(255,255,255,.25);
+background-size: 200% 200%;
+background-position: 0% 50%;
+transition: background-position .25s ease, transform .08s ease, box-shadow .2s ease, filter .15s ease;
+}
+.wcc-row .btn.cta:hover{
+background-position: 100% 50%;
+box-shadow: 0 10px 28px rgba(16,185,129,.38), inset 0 -1px 0 rgba(255,255,255,.25);
+filter: saturate(1.08) brightness(1.03);
+}
+.wcc-row .btn.cta:active{ transform: translateY(1px); }
+.wcc-row .btn.cta:focus{ outline: 2px solid #34D399; outline-offset: 2px; }
+
+/* Slightly stronger hover for non-CTA buttons too */
+.wcc-row .btn:hover{ border-color:#314367; filter: brightness(1.02); }
+
+/* CTA boost (integrated 1.7.3) */
+.btn.cta,
+.wcc-row .btn.cta,
+a.btn.cta{
+color:#fff !important;
+font-weight:800 !important;
+letter-spacing:.2px;
+text-shadow:0 1px 0 rgba(0,0,0,.22);
+white-space:nowrap;
+}
+.btn.cta:hover,
+.btn.cta:focus{
+filter:saturate(1.08) brightness(1.03);
+transform:translateY(-1px);
+box-shadow:0 6px 18px rgba(0,0,0,.25), 0 0 0 2px rgba(255,255,255,.06) inset;
+}
+.btn.cta:active{
+transform:translateY(0);
+filter:brightness(.98);
+box-shadow:0 3px 10px rgba(0,0,0,.25) inset;
+}
+
+/* Brand link should look like text, not bright link */
+.wcc-row .brand .brand-link,
+.wcc-row .brand .brand-link:link,
+.wcc-row .brand .brand-link:visited { color: inherit; text-decoration: none; }
+.wcc-row .brand .brand-link:hover .title { text-decoration: underline; }
+
+/* --- Uniform logo canvas (centered, fixed height) + CTA col width --- */
+:root{
+  --wcc-logo-h: 72px;      /* logo height in rows */
+  --wcc-logo-col: 220px;   /* width of the logo column */
+  --wcc-cta-w: 220px;      /* CTA column max width */
+}
+
+@media (min-width: 1100px){
+  :root{
+    --wcc-logo-h: 80px;
+    --wcc-logo-col: 240px;
+    --wcc-cta-w: 240px;    /* give CTA a bit more breathing space on wide */
+  }
+}
+
+@media (max-width: 980px){
+  :root{
+    --wcc-logo-h: 68px;
+    --wcc-logo-col: 200px;
+    --wcc-cta-w: 200px;    /* squeeze CTA on tablets */
+  }
+}
+
+
+/* Brand cell: fixed logo column + flexible text column */
+.wcc-row .brand{
+  display:grid;
+  grid-template-columns: var(--wcc-logo-col) minmax(0,1fr);
+  align-items:center;
+  column-gap:14px;
+}
+
+/* Center all logos inside the left column and keep ratio */
+.wcc-row .brand .logoimg{
+  display:block;
+  height: var(--wcc-logo-h);
+  width: auto;
+  max-width: 100%;              /* never exceed the logo column */
+  object-fit: contain;
+  object-position: center center;
+  justify-self: center;         /* center horizontally in grid cell */
+  align-self: center;           /* center vertically in grid cell */
+  border-radius: 12px;
+}
+
+/* Fallback initials chip, centered in the same canvas */
+.wcc-row .brand .logo{
+  height: var(--wcc-logo-h);
+  aspect-ratio: 1 / 1;
+  width: auto;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  background: linear-gradient(135deg,var(--wc-accent),var(--wc-accent-2));
+  color: var(--wc-text-inv);
+}
+
+
+/* Brand title weight/size */
+.wcc-row .brand .title{
+  margin:0;
+  line-height:1.2;
+  font-weight:700;
+  font-size:1.05rem;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;        /* iOS/Safari/Chromium */
+  white-space:normal;
+  overflow-wrap:anywhere;       /* graceful fallback */
+}
+
+/* Labels (WELCOME BONUS / FREE SPINS) smaller, calmer */
+.wcc-row .caption{
+font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+opacity: .7; margin-bottom: 6px; line-height: 1;
+}
+
+/* Values less shouty but confident */
+.wcc-row .value{ font-weight: 600; font-size: 1rem; line-height: 1.35; }
+
+/* Optional styling if the bonus text contains a code pill */
+.wcc-code{
+font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+padding: 2px 8px; border-radius: 999px;
+border: 1px solid rgba(255,255,255,.12);
+}
+
+/* Free spins placeholder “-” toned down */
+.wcc-row .value .muted { opacity: .55; }
+
+/* Bonus subline */
+.wcc-row .cell.bonus .sub{
+margin-top: 6px;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: .92rem;
+line-height: 1.2;
+}
+.wcc-row .cell.bonus .sub-label{
+font-size: .72rem;
+text-transform: uppercase;
+letter-spacing: .08em;
+opacity: .7;
+}
+/* Features: lock dot + text into two columns */
+.wcc-row .features{
+  display: grid;
+  grid-template-columns: 14px minmax(0,1fr);
+  gap: 6px 12px;
+  align-content: start;
+}
+.wcc-row .features .dot{
+  width: 14px;
+  text-align: center;
+  opacity: .65;
+}
+
+/* ===================== /
+/ Mobile polish (casino)/
+/ ===================== */
+
+@media (max-width: 760px){
+/* Kill the huge first image on casino singles (mobile only) */
+.single-wc_casino .post-thumbnail,
+.single-wc_casino .post-thumbnail img{ display:none !important; }
+
+.single-wc_casino main.container.readable > .entry > figure.wp-block-image:first-child,
+.single-wc_casino main.container.readable > .entry > figure.wp-block-image:first-child img{
+display:none !important;
+}
+}
+
+/* Tight heading when the image above is hidden */
+.single-wc_casino .entry h1,
+.single-wc_casino .entry .wp-block-post-title{ margin-top: 8px; }
+
+/* Content images behave on small screens */
+.entry img{ max-width: 100%; height: auto; }
+
+/* Sticky-offset for in-page anchors */
+:root{ --wcc-sticky-offset: 70px; }
+[id]{ scroll-margin-top: var(--wcc-sticky-offset); }
+
+/* Slightly reduce default top padding on <main> for phones */
+@media (max-width: 760px){ main.container{ padding-top: 12px; } }
+
+/* Prevent rogue full-width images from bleeding the edges */
+.container.readable .entry figure,
+.container.readable .entry .wp-block-image{
+margin-left: auto; margin-right: auto;
+max-width: 100%;
+}
+
+/* Mobile list rows: center CTAs in action column */
+@media (max-width: 680px){
+.wcc-row .actions{ align-items: center; }
+.wcc-row .btn{ margin-left: auto; margin-right: auto; }
+}
+
+/* === Casino hero (clean, specific, no !important) === */
+.single-wc_casino .casino-hero .hero-inner{
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding-inline: 22px;   /* keeps logo/CTA off the rounded edges */
+  box-sizing: border-box;
+}
+
+/* keep logo graphic tidy */
+.single-wc_casino .casino-hero .hero-logo{ display:block; }
+
+/* right-align CTA on desktop without fixed widths */
+.single-wc_casino .casino-hero .hero-cta-wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Mobile: stack + center CTA (works for both .hero-cta and raw /go/ links) */
+@media (max-width: 860px){
+  .single-wc_casino .casino-hero .hero-inner{
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .single-wc_casino .casino-hero .hero-cta-wrap{
+    justify-content: center;
+  }
+  .single-wc_casino .casino-hero .hero-cta,
+  .single-wc_casino .casino-hero a[href^="/go/"]{
+    display: inline-block;
+    width: 92%;
+    max-width: 340px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+#wcc-load-more{ margin:14px auto 0; display:block; max-width:240px; }
+/* === Load More button === */
+.wcc-load-more {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .85rem 1.25rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #0ea5e9, #0b8fc8);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.08);
+  font-weight: 600;
+  letter-spacing: .01em;
+  box-shadow: 0 6px 18px rgba(14,165,233,.28);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+  cursor: pointer;
+}
+
+.wcc-load-more:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(14,165,233,.36);
+  background: linear-gradient(180deg, #28b8fa, #1594d0);
+}
+
+.wcc-load-more:active {
+  transform: translateY(0);
+}
+
+.wcc-load-more:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56,189,248,.35),
+              0 10px 26px rgba(14,165,233,.36);
+}
+
+.wcc-load-more[disabled] {
+  opacity: .55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Optional loading state if JS toggles this class */
+.wcc-load-more.is-loading {
+  pointer-events: none;
+}
+.wcc-load-more.is-loading::after {
+  content: "";
+  width: 1em;
+  height: 1em;
+  border: 2px solid rgba(255,255,255,.45);
+  border-top-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: wccspin 1s linear infinite;
+}
+@keyframes wccspin {
+  to { transform: rotate(360deg); }
+}
+.wcc-slots-toolbar{margin:0 0 14px}
+.wcc-input{width:100%;max-width:420px;padding:.75rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#eaf2ff}
+/* Center the slots load-more button */
+#wcc-slots-load-more{ display:block; margin:14px auto 0; }
+/* === Featured image clamp on single posts (tight) === */
+.single .wp-block-post-featured-image,
+.single .post-thumbnail { text-align: center; }
+
+.single .wp-post-image,
+.single .post-thumbnail img,
+.single .wp-block-post-featured-image img,
+.single .wp-block-post-featured-image figure img {
+  display: block;
+  width: auto !important;        /* beat themes that force width:100% */
+  height: auto !important;
+  max-width: 680px;              /* also cap the width so it never feels huge */
+  max-height: 33vh;              /* ≈ one-third of the viewport */
+  margin: 0 auto 0.75rem;
+  border-radius: 12px;
+}
+
+@media (max-width: 600px) {
+  .single .wp-post-image,
+  .single .post-thumbnail img,
+  .single .wp-block-post-featured-image img,
+  .single .wp-block-post-featured-image figure img {
+    max-width: 92vw;             /* use most of the screen */
+    max-height: 40vh;            /* a bit taller on phones */
+  }
+}
+
+
+

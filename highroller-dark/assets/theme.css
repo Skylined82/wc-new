@@ -1,0 +1,800 @@
+/* =======================
+   Base
+======================= */
+html{scroll-behavior:smooth}
+body{margin:0;background:#0b111b;color:#e8eefc;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto}
+
+/* Generic site container (used outside the readable areas) */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+main.container{padding:32px 20px 28px}
+
+/* =======================
+   Header / Nav
+======================= */
+.header{
+  position:sticky; top:0; z-index:80;
+  /* lighter, bluer header */
+  background: linear-gradient(180deg,#10192c 0%, #0e1727 100%);
+  border-bottom:1px solid #1a2746;   /* slightly brighter line */
+  overflow:hidden;
+}
+
+.header .inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand .dot{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#5ee1a2,#64a5ff);box-shadow:0 4px 18px rgba(100,165,255,.2)}
+.nav .menu{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
+
+/* NAV — shorter pills + restore background */
+.nav .menu a{
+  display:inline-flex;            /* keep text centered */
+  align-items:center;
+  height:30px;                    /* was 34px */
+  padding:0 10px;                 /* a touch narrower */
+  border-radius:10px;             /* matches the shorter height */
+  font-weight:600;
+  color:#eaf2ff;
+  text-decoration:none;
+
+  /* bring the pill back (border + bg) */
+  border:1px solid rgba(116,172,255,.30);
+  background:linear-gradient(180deg, rgba(64,108,174,.24) 0%, rgba(31,58,110,.16) 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 6px 14px rgba(15,25,44,.18);
+}
+
+
+/* hover keeps the same height, slightly stronger shadow */
+.nav .menu a:hover{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 8px 18px rgba(15,25,44,.24);
+}
+
+.nav .menu .current-menu-item > a{
+  background:linear-gradient(180deg, rgba(116,172,255,.50) 0%, rgba(64,108,174,.42) 100%);
+  border-color:rgba(133,192,255,.85);
+  color:#fff;
+}
+
+
+/* pressed */
+.nav .menu a:active{
+  transform:translateY(0);
+  filter:brightness(.98);
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.28);
+}
+
+/* Make focus ring inside the pill so it doesn't look larger */
+.nav .menu a:focus-visible{
+  outline: none;
+  /* inner ring + keep the same shadow stack as base */
+  box-shadow:
+    inset 0 0 0 2px rgba(133,192,255,.85),
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 10px 22px rgba(15,25,44,.22);
+}
+
+/* If the element is focused by mouse, don't show a ring */
+.nav .menu a:focus:not(:focus-visible){
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 10px 22px rgba(15,25,44,.22);
+}
+
+
+.hambtn{display:none;margin-left:10px;width:40px;height:40px;border-radius:10px;border:1px solid #1e2b4b;background:#0f1726;color:#cfe4ff;align-items:center;justify-content:center}
+.hambtn span{display:block;width:18px;height:2px;background:#cfe4ff;position:relative}
+.hambtn span:before,.hambtn span:after{content:"";position:absolute;left:0;width:18px;height:2px;background:#cfe4ff}
+.hambtn span:before{top:-6px}.hambtn span:after{top:6px}
+@media(max-width:860px){ .nav{display:none} .hambtn{display:flex} }
+
+/* WordPress Custom Logo – clamp size + hide text when logo exists */
+.header .brand{min-width:0}
+.header .custom-logo-link{display:inline-flex;align-items:center;max-width:100%}
+.header .custom-logo-link img.custom-logo,
+.header .brand img.custom-logo{
+  height:48px !important; max-height:48px !important; width:auto !important; max-width:100% !important; display:block;
+}
+@media (max-width:767px){
+  .header .custom-logo-link img.custom-logo,
+  .header .brand img.custom-logo{height:40px !important;max-height:40px !important}
+}
+.has-custom-logo .site-title-text, .has-custom-logo .dot{display:none !important}
+
+/* Hide any Site Logo block inside the home page content (header already shows it) */
+.home .entry .wp-block-site-logo,
+.home .entry .custom-logo-link,
+.home .entry img.custom-logo{display:none !important}
+/* Collapse blank page titles and tighten the top spacing on pages
+   where we intentionally hide the H1 (e.g., Bonuses, Best Casinos) */
+.page .card > .page-title:empty{
+  display:none !important;
+}
+
+/* When the H1 is empty, pull the first WCC section up a bit */
+.page .card > .page-title:empty + .entry > .wcc-section:first-child{
+  margin-top:-12px;  /* tweak -10…-14px to taste */
+}
+
+/* ======================= Cards / Highlights shell ======================= */
+.card {
+  background: #111827;
+  border: 1px solid #18233d;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 22px;
+}
+
+.hl-shell.card{
+  padding:0; overflow:hidden;
+  /* top glow + subtle darker base at the bottom */
+  background:
+    linear-gradient(180deg, rgba(17,31,57,0) 0%, rgba(17,31,57,.22) 100%),
+    radial-gradient(120% 160% at 20% 0, #0f1626 0%, #0d1525 60%, #0b121e 100%);
+  border-color:#1a2746;
+}
+
+
+.hl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+   border-bottom:1px solid #1a2746;
+   background:linear-gradient(180deg, rgba(100,165,255,.12), transparent 70%);
+}
+.hl-head h2 { margin: 0; font-size: 20px; }
+
+.hl-nav { display: flex; gap: 8px; }
+.hl-nav button{
+  width:34px; height:34px; border-radius:10px;
+  border:1px solid rgba(112,178,255,.35);
+  background:linear-gradient(180deg, #1b2f53, #142544);
+  color:#e3efff; cursor:pointer;
+}
+.hl-nav button:hover{
+  background:linear-gradient(180deg, #2a4a84, #1b2f53);
+  border-color:rgba(112,178,255,.60);
+}
+
+
+
+.hl-track { padding: 12px 8px 18px; }
+
+/* One stage height, with padding vars */
+.hl-shell{
+  --hi-stage:160px;
+  --hi-padX:16px;
+  --hi-padY:14px;
+  --hi-gap:10px;          /* inner gap for logos */
+}
+.hl-shell .wcc-highlights { scrollbar-width: none; }
+.hl-shell .wcc-highlights::-webkit-scrollbar { display: none; }
+.hl-shell .wcc-highlights { scroll-snap-type: x mandatory; }
+.hl-shell .wcc-highlights .hi-card { scroll-snap-align: start; }
+
+/* ===== Highlights: framed media area + tidy images ===== */
+.hl-shell .wcc-highlights .hi-card{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;          /* title | meta ("Slot") */
+  grid-template-rows: var(--hi-stage) 24px;  /* stage | single caption row */
+  align-content: start;
+  gap: 8px;
+  padding: var(--hi-padY) var(--hi-padX);
+  border-radius: 18px;
+  overflow: hidden;
+  line-height: 1;
+}
+
+
+/* glossy stage sits behind the media row */
+.hl-shell .wcc-highlights .hi-card::before{
+  content:"";
+  position:absolute;
+  top:var(--hi-padY);
+  left:var(--hi-padX);
+  right:var(--hi-padX);
+  height:var(--hi-stage);
+  border-radius:12px;
+
+  /* slightly bluer glass */
+  background:radial-gradient(120% 100% at 50% 0, #152039 0%, #0f1a2f 60%, #0b121e 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(100,165,255,.16);
+  pointer-events:none;
+  z-index:0;
+}
+
+
+/* logo/media centered inside the stage, rounded and slightly inset */
+.hl-shell .wcc-highlights .hi-card > img,
+.hl-shell .wcc-highlights .hi-card > .ph{
+  grid-row: 1;
+  grid-column: 1 / -1;
+  place-self: center;
+  display:block;
+  /* gutter around the bitmap without using padding */
+  max-width:  calc(100% - (var(--hi-padX) + var(--hi-gap)) * 2);
+  max-height: calc(var(--hi-stage) - var(--hi-gap) * 2);
+  object-fit: contain;
+  object-position: center;
+  border-radius:12px;               /* visible rounding on the bitmap */
+  box-shadow:0 10px 18px rgba(0,0,0,.28);
+  z-index:1;
+}
+
+
+/* labels always in row 2 + 3 */
+/* caption row: title left, "Slot" right */
+.hl-shell .wcc-highlights .hi-card .t{
+  grid-row: 2;            /* same row as .k */
+  grid-column: 1;         /* left side */
+  align-self: center;
+  padding-left: 10px;     /* a few px from the border */
+  font-weight: 800;
+}
+
+.hl-shell .wcc-highlights .hi-card .k{
+  grid-row: 2;            /* same row as .t */
+  grid-column: 2;         /* right side */
+  align-self: center;
+  text-align: right;
+  padding-right: 10px;    /* a few px from the border */
+  font-size: 11px;
+  color: #9db0cf;
+}
+
+
+/* mobile shorter stage */
+@media (max-width:680px){
+  .hl-shell{ --hi-stage:140px; --hi-gap:8px; }
+}
+
+
+/* =======================
+   Mobile Drawer
+======================= */
+.mobile-drawer{position:fixed;inset:0;display:none;z-index:90}
+.mobile-drawer.open{display:block}
+.mobile-drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.mobile-drawer .panel{
+  position:absolute;top:0;right:0;left:auto;height:100%;width:82%;max-width:360px;
+  background:#0d1320;border-left:1px solid #1a2542;padding:16px 14px;
+  display:flex;flex-direction:column;gap:14px;transform:translateX(100%);transition:transform .25s ease
+}
+.mobile-drawer.open .panel{transform:translateX(0)}
+.mobile-drawer .menu{display:flex;flex-direction:column;gap:8px;list-style:none;margin:0;padding:0}
+.mobile-drawer .menu a{
+  display:block; color:#cfe4ff; text-decoration:none;
+  padding:12px; border-radius:12px;
+
+  /* add border to match desktop pills */
+  border:1px solid rgba(100,165,255,.22);
+  background:#0f1726;
+}
+.mobile-drawer .menu a:hover{
+  background:#13223b;                           /* was #151d30 */
+  border-color:rgba(100,165,255,.35);
+}
+
+.mobile-drawer .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.mobile-drawer .drawer-head .brand .custom-logo-link img.custom-logo,
+.mobile-drawer .drawer-head .brand img.custom-logo{height:36px !important;max-height:36px !important;width:auto !important;display:block}
+.closebtn{width:34px;height:34px;border-radius:10px;border:1px solid #1e2b4b;background:#0f1726;color:#cfe4ff}
+
+/* =======================
+   SEO footer card
+======================= */
+.seo-card{background:#0f1626;border:1px solid #1a2746;border-radius:18px;padding:18px;margin:10px 0 28px;color:#cfe4ff}
+.seo-card h2{margin:0 0 10px;font-size:20px}
+.seo-card p{margin:.4rem 0;color:#9db0cf}
+
+/* =======================
+   CTA button (shared)
+======================= */
+.wcc-btn{display:inline-flex;align-items:center;justify-content:center;font-weight:600;padding:10px 16px;border-radius:12px;text-decoration:none;color:#071013;background:#22c55e}
+.wcc-btn:hover{filter:brightness(1.05)}
+
+/* =========================================================
+   SINGLE: WC Casino — ONE source of truth for width/spacing
+========================================================= */
+
+/* Set the page width you want for hero + content */
+:root{ --page-max: 1200px; --page-pad: 20px; }
+
+/* Use this on the hero inner AND the main content to keep edges aligned */
+.container.readable{
+  box-sizing:border-box;
+  max-width:var(--page-max);
+  padding-left:var(--page-pad);
+  padding-right:var(--page-pad);
+  margin-left:auto; margin-right:auto;
+}
+
+/* ---- HERO (cardish) ---- */
+.casino-hero.cardish{ margin:12px 0 12px; padding:0; }
+.casino-hero .hero-inner{
+  padding-left:18px;
+  padding-right:18px;
+  border-radius:14px;
+  position: relative;
+  background:rgba(255,255,255,.03);
+  display:grid; grid-template-columns: clamp(96px, 8.5vw, 104px) minmax(0,1fr) auto;
+  gap:16px;               /* ADD HERE */
+  align-items:center;     /* ADD HERE */
+}
+.casino-hero .hero-inner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:14px;                    /* match the rounding */
+  pointer-events:none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);  /* the inner border */
+}
+
+.casino-hero .hero-logo-wrap{width: clamp(96px, 8.5vw, 104px);height: clamp(96px, 8.5vw, 104px);border-radius:12px;background:rgba(255,255,255,.02);display:grid;place-items:center}
+.casino-hero .hero-logo{max-width: clamp(76px, 6.4vw, 84px);max-height: clamp(76px, 6.4vw, 84px);object-fit:contain;opacity:.95}
+.casino-hero .hero-logo.placeholder{width:76px;height:76px;display:grid;place-items:center;font-weight:700;border-radius:10px}
+.casino-hero .hero-title{margin:0;font-size: clamp(1.75rem, 1.6rem + 0.5vw, 2rem);letter-spacing:.2px}
+.casino-hero .hero-cta{padding:12px 20px;border-radius:12px;font-weight:700;box-shadow:0 8px 22px rgba(16,185,129,.22);white-space:nowrap}
+
+@media (max-width:960px){
+  .casino-hero .hero-inner{
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+    justify-items: center;
+  }
+  .casino-hero .hero-cta{
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
+
+/* Put title + meta on one line (wrap when tight) */
+.casino-hero .hero-copy{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  min-width:0; /* NEW: lets the row shrink without clipping */
+}
+
+/* desktop/tablet: show divider */
+.casino-hero .hero-copy.has-meta .hero-title{
+  border-right:1px solid rgba(255,255,255,.22);
+  padding-right:14px;
+  margin-right:12px;
+}
+
+/* Bonus + code style — slightly larger to sit better with the H1 */
+.casino-hero .hero-meta{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:600;
+  color:#cfe4ff;
+  font-size:1rem;
+  line-height:1.35;
+}
+.casino-hero .hero-meta{ font-size: clamp(1rem, 0.95rem + 0.3vw, 1.12rem); }
+
+
+.casino-hero .hero-meta .code-label{
+  color:#9db0cf;
+  text-transform:uppercase;
+  font-size:.85em;
+  letter-spacing:.02em;
+  margin-right:6px;
+}
+.casino-hero .hero-meta .coupon{
+  background:#121b2c;
+  border:1px solid #1c2a4b;
+  border-radius:10px;
+  padding:3px 8px; /* a touch more padding */
+  font-weight:700;
+}
+
+/* Mobile: stack under the title, hide the divider */
+@media (max-width:960px){
+  .casino-hero .hero-copy{
+    flex-direction: column;
+    gap: 6px;
+  }
+  .casino-hero .hero-copy.has-meta .hero-title{
+    padding-right: 0;
+    margin-right: 0;
+    border-right:0; /* hide divider on stack */
+  }
+}
+
+/* ──────────────────────────────────────────────
+   SINGLE: WC Casino — hero & content aligned
+   ────────────────────────────────────────────── */
+
+/* Use the same overall width variables */
+.single-wc_casino{
+  --page-max: 1200px;   /* tweak if you want narrower e.g. 1100px */
+  --page-pad: 20px;
+}
+
+/* Gutenberg/content edge alignment (one compact rule) */
+.single-wc_casino main.container.readable
+  > :where(.is-layout-constrained, .alignwide, .alignfull){
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+
+/* Cards inside the post body line up with hero edges */
+.single-wc_casino main.container.readable
+  :is(.card, .seo-card, .wcc-review){
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Trim first block gap + review spacing */
+.single-wc_casino main.container.readable > :first-child{ margin-top: 0 !important; }
+.single-wc_casino main.container.readable .wcc-review{ margin-top: 16px !important; }
+
+/* Casino single: readable content wrapper as a card on ALL viewports */
+.single-wc_casino main.container.readable{
+  max-width: var(--page-max);
+  padding: 12px 18px 24px;
+  background:#111827;
+  border:1px solid #18233d;
+  border-radius:18px;
+}
+
+/* ======================
+   SLOT PAGE
+====================== */
+
+/* leaner (functionally identical) */
+.single-wc_slot main.container{
+  padding:12px 20px 28px;
+}
+
+/* Hero: two columns (image | title), gradient background */
+.single-wc_slot .slot-hero.card{
+  display:grid;
+  grid-template-columns: clamp(136px, 16vw, 176px) 1fr;
+  align-items:center;
+  gap:16px;
+  padding: 10px 14px;
+  margin:6px 0 8px;
+  min-height:0;
+  background: radial-gradient(120% 120% at 50% 0%, #141c2b 0%, #0e1626 60%, #0b121e 100%);
+  border-radius:18px;
+}
+
+/* Desktop/tablet hero figure */
+.single-wc_slot .slot-hero-figure{
+  margin:0;
+  border-radius:16px;
+  overflow:hidden;
+
+  /* Reduced height */
+  height: 144px;             /* was 220px */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/* Desktop/tablet hero image */
+.single-wc_slot .slot-hero-img{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:100%;
+  object-fit:contain;
+
+  border-radius:16px;
+  -webkit-clip-path: inset(0 round 16px);
+          clip-path: inset(0 round 16px);
+  box-shadow:0 10px 18px rgba(0,0,0,.28);
+}
+
+
+/* Title block alignment */
+/* Ensure overlay text is centered vertically */
+.single-wc_slot .slot-hero-overlay{
+  display:flex;
+  align-items:center;       /* vertical centering */
+  justify-content:flex-start;
+  height:100%;              /* stretch to match figure height */
+}
+.single-wc_slot .slot-title{
+  margin:0;
+  line-height:1.2;
+  font-size: clamp(1rem, 0.8rem + .8vw, 1.4rem);
+}
+
+/* ========================= SLOTS GRID — balanced media ========================= */
+.wcc-slots{ display:grid; gap:18px; }
+.wcc-slots.cols-3{ grid-template-columns: repeat(3, 1fr); }
+
+.wcc-slots{
+  display:grid;
+  gap:18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+/* Each card = image stage + title + provider */
+.wcc-slots .slot{
+	--stage-h: clamp(120px, 15vw, 160px);
+	position: relative;
+	display: grid;
+	grid-template-rows: var(--stage-h) auto auto;
+	background: #0f1626;
+	border: 1px solid #1a2746;
+	border-radius: 14px;
+	padding: 14px;
+	text-decoration: none;
+	color: inherit;
+	transition: transform .15s ease, box-shadow .15s ease;
+	overflow: hidden;
+}
+.wcc-slots .slot::before{
+  content:"";
+  display:block;              /* add this */
+  grid-row:1/2; grid-column:1/2;
+  border-radius:12px;
+  background:radial-gradient(120% 100% at 50% 0%, #141c2b 0%, #0e1626 60%, #0b121e 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+  z-index:0;
+}
+
+/* image inside slot card */
+.wcc-slots .slot>img{
+  grid-row:1/2; grid-column:1/2;
+  justify-self:center; align-self:center;
+  width:auto !important; height:auto !important;
+  max-width:calc(100% - 12px) !important;
+  max-height:calc(var(--stage-h) - 12px) !important;
+  object-fit:contain;
+  border-radius:14px !important;
+  box-shadow:0 10px 18px rgba(0,0,0,.28);
+  z-index:1;
+}
+/* End */
+
+/* text */
+.wcc-slots .slot .slotname{ font-weight:700; margin:6px 2px 4px; line-height:1.25; }
+.wcc-slots .slot .provider{ font-size:.85rem; color:#9db0cf; }
+
+/* hover */
+.wcc-slots .slot:hover{ transform:translateY(-2px); box-shadow:0 12px 26px rgba(0,0,0,.22); }
+
+/* Mobile stage a bit taller */
+@media (max-width:680px){
+	.wcc-slots .slot{ --stage-h: clamp(140px, 26vw, 180px); }
+}
+
+/* ==============================
+   SLOT PAGE — MOBILE COMPACT
+   (≤ 680px)
+============================== */
+@media (max-width:680px){
+
+  /* Trim page padding a touch */
+  .single-wc_slot main.container{ padding-top:10px; }
+
+  /* Hero card: stack */
+  .single-wc_slot .slot-hero.card{
+    display:block;
+    padding:8px 12px;
+    margin:8px 0 10px;
+    gap:0;
+    min-height:0;
+  }
+
+  /* Image wrapper */
+.single-wc_slot .slot-hero-figure{
+    margin:0 0 6px 0;
+    border-radius:12px;
+    overflow:hidden;
+
+    /* Reduced mobile height */
+    height:120px;           /* was 180px */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+
+/* Mobile slot hero image */
+  .single-wc_slot .slot-hero-img{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+
+    width:auto;
+    max-width:100%;
+    height:auto;
+    max-height:100%;
+    object-fit:contain;
+
+    border-radius:16px;
+    -webkit-clip-path: inset(0 round 16px);
+            clip-path: inset(0 round 16px);
+  }
+
+  .single-wc_slot .slot-hero-overlay{
+    display:flex;
+    align-items:center;
+    justify-content:center; /* center horizontally on small screens */
+    height:100%;
+    text-align:center;
+  }
+
+  /* Title: small & tight */
+  .single-wc_slot .slot-title{
+    margin:2px 0 0;
+    line-height:1.25;
+    font-size:1rem;
+  }
+
+  /* Demo: short 16:9 rectangle + centered Play button */
+  .single-wc_slot .wcc-demo{ margin-top:10px !important; }
+  .single-wc_slot .wcc-demo .framewrap{
+    position:relative !important;
+    width:100%;
+    aspect-ratio:16/9;
+    height:auto !important;
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .single-wc_slot .wcc-demo .framewrap iframe{
+    width:100% !important;
+    height:100% !important;
+  }
+/* Center the Play Demo button itself on phones */
+.single-wc_slot .wcc-demo .demo-overlay{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:5;
+
+  /* make it a pill-sized button, not a full overlay */
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 18px;
+  background:#22c55e;
+  color:#071013;
+  font-weight:600;
+  border:0;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+  width:auto;
+  height:auto;
+}
+
+
+
+  .single-wc_slot .wcc-demo .demo-note{
+    margin:8px 0 0;
+    font-size:.85rem;
+    line-height:1.3;
+  }
+
+  /* Optional: hide verbose features on phones */
+  .single-wc_slot .wcc-row .features{ display:none; }
+}
+
+/* "Minimum deposit" line under the bonus value */
+.wcc-row .cell.bonus .value .min-dep{
+  margin-top:6px; font-size:14px; color:#9db0cf;
+}
+.wcc-row .cell.bonus .value .min-dep .caption{
+  text-transform:uppercase; font-size:12px; letter-spacing:.02em; color:#7c8fb1; margin-right:6px;
+}
+/* prevent background scroll when modal is open */
+html.no-scroll { overflow: hidden; }
+
+/* demo modal base */
+.demo-modal[hidden]{ display:none !important; }
+.demo-modal{
+  position:fixed; inset:0; z-index:1000;
+  display:grid; place-items:center;
+}
+.demo-modal-backdrop{
+  position:absolute; inset:0; background:rgba(0,0,0,.55);
+}
+.demo-modal-panel{
+  position:relative;
+  width:min(1200px, 92vw);   /* fits 1920/2560 nicely; tweak if you want larger */
+  height:min(85vh, 900px);
+  background:#0f1626;
+  border:1px solid #1a2746;
+  border-radius:14px;
+  overflow:hidden;
+  isolation:isolate;
+  box-shadow:0 22px 60px rgba(0,0,0,.45);
+}
+.demo-modal-close{
+  position:absolute;
+  top:calc(env(safe-area-inset-top, 0px) + 10px);
+  right:calc(env(safe-area-inset-right, 0px) + 10px);
+  width:36px; height:36px; border-radius:10px;
+  border:1px solid #1e2b4b; background:#0f1726; color:#cfe4ff;
+  z-index:10000;           /* above the iframe compositing layer */
+  pointer-events:auto;
+}
+.demo-modal-framewrap{ position:absolute; inset:0; }
+.demo-modal-framewrap iframe{ width:100%; height:100%; border:0; }
+
+/* —— Mobile (≤680px): fullscreen modal —— */
+@media (max-width:680px){
+  .demo-modal-panel{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100svh;           /* mobile-safe viewport */
+    height:100vh;            /* fallback */
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+}
+/* While modal is open, don't display the inline iframe (belt & suspenders) */
+html.demo-open .wcc-demo .framewrap iframe{ display:none !important; }
+
+/* =======================
+   SLOTS ARCHIVE (/slots)
+   Match Bonuses wrapper
+======================= */
+
+/* If the inner #primary still has padding (in case you didn't edit PHP), kill it */
+.post-type-archive-wc_slot #primary.readable{
+  padding-left:0 !important;
+  padding-right:0 !important;
+  padding-top:0 !important;
+}
+
+/* Card spacing identical to Bonuses card */
+.post-type-archive-wc_slot .slots-wrap.card{
+  padding:18px;                 /* was 14px top; now 18px like Bonuses */
+  margin-top:0;
+}
+
+/* Slots archive: make the H1 match Bonuses */
+.post-type-archive-wc_slot .slots-wrap .page-title{
+  font-size:25px;        /* down from 28px */
+  line-height:1.2;
+  margin-top: 24px;    /* same top feel as Bonuses */
+  font-weight:700;
+}
+
+
+/* Tidy bits inside the card */
+.post-type-archive-wc_slot .wcc-slots-toolbar{ margin:6px 0 12px; }
+.post-type-archive-wc_slot .wcc-slots{ margin:0; }
+
+/* Keep edges aligned to the readable container */
+.post-type-archive-wc_slot main.container.readable .slots-wrap,
+.post-type-archive-wc_slot main.container.readable .slots-wrap > *{
+  margin-left:0 !important;
+  margin-right:0 !important;
+}
+
+/* Small screens */
+.post-type-archive-wc_slot .slots-wrap .page-title{
+  font-size: clamp(22px, 2.2vw, 25px);
+  line-height:1.2;
+  margin-top:24px;
+  font-weight:700;
+}
+
+
+
+

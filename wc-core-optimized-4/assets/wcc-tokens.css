@@ -1,0 +1,31 @@
+:root{
+  --wc-bg:#0B0F19;
+  --wc-surface:#141A26;
+  --wc-overlay:#0A1624;
+  --wc-border:#1F2A3A;
+
+  --wc-text:#E6ECF3;
+  --wc-text-2:#A0AEC0;
+  --wc-text-3:#6B7280;
+  --wc-text-inv:#062718;
+
+  /* Updated accents for higher-CTR CTAs */
+  --wc-accent:#10B981;          /* emerald */
+  --wc-accent-2:#22C55E;        /* green */
+  --wc-accent-hover:#34D399;    /* emerald-300 */
+  --wc-accent-2-hover:#A3E635;  /* lime-400 */
+
+  --wc-success:#16A34A;
+  --wc-warning:#EAB308;
+  --wc-danger:#F43F5E;
+  --wc-info:#22D3EE;
+
+  --wc-radius:14px;
+  --wc-radius-sm:10px;
+  --wc-gap:16px;
+  --wc-line:1px solid var(--wc-border);
+}
+
+/* Links shift to cooler cyan for differentiation from CTA */
+a{color:#60A5FA;}
+a:hover{color:#93C5FD;}
